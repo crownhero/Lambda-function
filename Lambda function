@@ -1,0 +1,14 @@
+import re
+
+def lambda_handler(event, context):
+    request = event['Records'][0]['cf']['request']
+    uri = request['uri']
+    
+    # Check if the URI already ends with a valid extension
+    if not re.search(r'\.(html|css|js|jpg|jpeg|png|gif|svg|ico|woff|woff2|webp)$', uri):
+        # If not, add ".html" to the end of the URI
+        uri += ".html"
+        request['uri'] = uri
+        
+    return request
+
